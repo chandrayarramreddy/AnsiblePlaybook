@@ -4,9 +4,9 @@
   become: true
 
   tasks:
-  - name: Change to Sudo Su
+  #- name: Change to Sudo Su
 
-  - name: Update and Upgrade
+  #- name: Update and Upgrade
 
   - name: Upgrade all packages to the latest version
     apt:
