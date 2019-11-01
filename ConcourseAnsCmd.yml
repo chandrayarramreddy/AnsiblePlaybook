@@ -100,20 +100,20 @@
       state: directory
 
 
-  - name: create ssh keys
+  # - name: create ssh keys
 
-  #- name: Move foo to bar
-    command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
-  - name: Move foo to bar
-    command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
-  - name: Move foo to bar
-    command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
+  # #- name: Move foo to bar
+  #   command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
+  # - name: Move foo to bar
+  #   command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
+  # - name: Move foo to bar
+  #   command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
 
 
-  - name: copy keys to authorized
+  # - name: copy keys to authorized
   
-  #- name: Move foo to bar
-    command: cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
+  # #- name: Move foo to bar
+  #   command: cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
 
 
   - name: create web environment with some data
@@ -129,7 +129,7 @@
 
         CONCOURSE_BASIC_AUTH_USERNAME=admin
         CONCOURSE_BASIC_AUTH_PASSWORD=secret
-        CONCOURSE_EXTERNAL_URL=http://10.20.30.40:8080
+        CONCOURSE_EXTERNAL_URL=http://35.162.248.89:8080
 
 
   #- name: create worker environment with data
