@@ -60,7 +60,7 @@
   #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
-     # dest: /etc/foo.conf
+      dest: .
      # mode: '0440'
 
   - name: Download fly
@@ -68,7 +68,7 @@
   #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
-
+      dest: .
   # - name: Permission to executable
 
   # - name: Change file ownership, group and permissions
