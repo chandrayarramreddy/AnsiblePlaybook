@@ -154,10 +154,15 @@
   #- name: Permission
     command: sudo chown -R concourse:concourse /etc/concourse
 
-  - name: change mode permissions
+  - name: change mode web permissions
 
   #- name: Permission mode
-    command: sudo chmod 600 /etc/concourse/*_environment
+    command: sudo chmod 600 /etc/concourse/web_environment
+
+  - name: change mode worker permissions
+
+  #- name: Permission mode
+    command: sudo chmod 600 /etc/concourse/worker_environment
 
   - name: create web.service
 
