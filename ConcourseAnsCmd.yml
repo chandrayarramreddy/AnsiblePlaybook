@@ -79,8 +79,9 @@
   #     mode: '0644'
      #or
   - name: Changing perm to exacutable
-    file: dest=concourse_linux_amd64 fly_linux_amd64 mode=a+x
-
+    file: dest=./concourse_linux_amd64 mode=a+x 
+  - name: Changing perm to exacutable
+    file: dest=./fly_linux_amd64 mode=a+x
   - name: Move concourse to folder
 
   #- name: Move foo to bar
