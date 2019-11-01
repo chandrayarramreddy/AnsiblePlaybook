@@ -85,11 +85,11 @@
   - name: Move concourse to folder
 
   #- name: Move foo to bar
-    command: mv . /usr/bin/concourse
+    command: sudo mv . /usr/bin/concourse
   #- name: Move fly to folder
 
   - name: Move foo to bar
-    command: mv . /usr/bin/concourse
+    command: sudo mv . /usr/bin/concourse
 
   - name: Make directory of concourse
 
