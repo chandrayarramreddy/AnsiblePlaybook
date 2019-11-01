@@ -54,7 +54,7 @@
 
   - name: creating db of postgresql
     command: sudo -u postgres createdb --owner=concourse atc
-    
+
   - name: Download Concourse
 
   #- name: Download foo.conf
@@ -69,7 +69,7 @@
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
 
-  - name: Permission to executable
+  # - name: Permission to executable
 
   # - name: Change file ownership, group and permissions
   #   file:
@@ -78,7 +78,7 @@
   #     group: foo
   #     mode: '0644'
      #or
-  - name: Changing perm of "/foo/bar.sh", adding "+x"
+  - name: Changing perm to exacutable
     file: dest=concourse_linux_amd64 fly_linux_amd64 mode=a+x
 
   - name: Move concourse to folder
