@@ -21,7 +21,7 @@
     apt:
       update_cache: yes
 
-  - name: Install postgresql
+  #- name: Install postgresql
 
   - name: Install PostgreSQL
     apt: name={{ item }} update_cache=true state=installed
@@ -32,12 +32,12 @@
       - python-psycopg2
     tags: packages
 
-  - name: Enable postgresql
+  #- name: Enable postgresql
 
   - name: Ensure the PostgreSQL service is running
     service: name=postgresql state=started enabled=yes
 
-  - name: create user for postgresql
+  #- name: create user for postgresql
 
   - name: Create a PostgreSQL DB server
     hosts: dbserver
@@ -49,11 +49,11 @@
       db_name: dbname
       db_password: dbpassword
 
-  - name: creating db of postgresql
+  #- name: creating db of postgresql
 
   - name: Download Concourse
 
-  - name: Download foo.conf
+  #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
      # dest: /etc/foo.conf
@@ -61,43 +61,42 @@
 
   - name: Download fly
 
-  - name: Download foo.conf
+  #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
 
   - name: Permission to executable
 
-  - name: Change file ownership, group and permissions
-    file:
-      path: /etc/foo.conf
-      owner: foo
-      group: foo
-      mode: '0644'
+  # - name: Change file ownership, group and permissions
+  #   file:
+  #     path: /etc/foo.conf
+  #     owner: foo
+  #     group: foo
+  #     mode: '0644'
      #or
   - name: Changing perm of "/foo/bar.sh", adding "+x"
-    file: dest=/foo/bar.sh mode=a+x
+    file: dest=concourse_linux_amd64 fly_linux_amd64 mode=a+x
 
   - name: Move concourse to folder
 
-  - name: Move foo to bar
-    command: mv /path/to/foo /path/to/bar
+  #- name: Move foo to bar
+    command: mv . /usr/bin/concourse
+  #- name: Move fly to folder
 
-  - name: Move fly to folder
-
   - name: Move foo to bar
-    command: mv /path/to/foo /path/to/bar
+    command: mv . /usr/bin/concourse
 
   - name: Make directory of concourse
 
-  - name: Creates directory
+  #- name: Creates directory
     file:
-      path: /src/www
+      path: /etc/concourse
       state: directory
 
 
   - name: create ssh keys
 
-  - name: Move foo to bar
+  #- name: Move foo to bar
     command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
   - name: Move foo to bar
     command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
@@ -107,13 +106,13 @@
 
   - name: copy keys to authorized
   
-  - name: Move foo to bar
+  #- name: Move foo to bar
     command: cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
 
 
   - name: create web environment with some data
 
-  - name: Ansible create file with content example
+  #- name: Ansible create file with content example
     copy:
       dest: "/etc/concourse/web_environment"
       content: |
@@ -127,7 +126,7 @@
         CONCOURSE_EXTERNAL_URL=http://10.20.30.40:8080
 
 
-  - name: create worker environment with data
+  #- name: create worker environment with data
 
   - name: Ansible create file with content example
     copy:
@@ -141,22 +140,22 @@
 
   - name: Create concourse user
 
-  - name: Permission
+  #- name: Permission
     command: sudo adduser --system --group concourse
 
   - name: change user permissions
 
-  - name: Permission
+  #- name: Permission
     command: sudo chown -R concourse:concourse /etc/concourse
 
   - name: change mode permissions
 
-  - name: Permission mode
+  #- name: Permission mode
     command: sudo chmod 600 /etc/concourse/*_environment
 
   - name: create web.service
 
-  - name: Ansible create file with content example
+  #- name: Ansible create file with content example
     copy:
       dest: "/etc/systemd/system/concourse-web.service"
       content: |
@@ -175,7 +174,7 @@
 
   - name: create worker.service
 
-  - name: Ansible create file with content example
+  #- name: Ansible create file with content example
     copy:
       dest: "/etc/systemd/system/concourse-worker.service"
       content: |
@@ -194,16 +193,16 @@
 
   - name: start web and worker
 
-  - name: Permission mode
+  #- name: Permission mode
     command: sudo systemctl start concourse-web concourse-worker
 
   - name: enable web and worker
 
-  - name: Permission mode
+  #- name: Permission mode
     command: sudo systemctl enable concourse-web concourse-worker
 
   - name: status of web and worker
 
-  - name: Permission mode
+  #- name: Permission mode
     command: sudo systemctl status concourse-web concourse-worker
 
