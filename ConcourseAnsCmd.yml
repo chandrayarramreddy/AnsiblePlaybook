@@ -9,16 +9,16 @@
   #- name: Update and Upgrade
 
   - name: Upgrade all packages to the latest version
-    apt:
+    apt-get:
       name: "*"
       state: latest
 
   - name: Update all packages to the latest version
-    apt:
+    apt-get:
       upgrade: dist
 
   - name: Run the equivalent of "apt-get update" as a separate step
-    apt:
+    apt-get:
       update_cache: yes
 
   #- name: Install postgresql
@@ -79,9 +79,9 @@
   #     mode: '0644'
      #or
   - name: Changing perm to exacutable
-    file: dest=./concourse_linux_amd64 mode=a+x 
+    file: dest=. mode=a+x 
   - name: Changing perm to exacutable
-    file: dest=./fly_linux_amd64 mode=a+x
+    file: dest=. mode=a+x
   - name: Move concourse to folder
 
   #- name: Move foo to bar
