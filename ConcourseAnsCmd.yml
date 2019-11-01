@@ -9,16 +9,16 @@
   #- name: Update and Upgrade
 
   - name: Upgrade all packages to the latest version
-    apt-get:
+    apt:
       name: "*"
       state: latest
 
   - name: Update all packages to the latest version
-    apt-get:
+    apt:
       upgrade: dist
 
   - name: Run the equivalent of "apt-get update" as a separate step
-    apt-get:
+    apt:
       update_cache: yes
 
   #- name: Install postgresql
