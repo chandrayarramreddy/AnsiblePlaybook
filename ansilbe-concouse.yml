@@ -1,0 +1,39 @@
+---
+- name: Installting Concourse
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Change to Sudo Su
+
+  - name: Install python3
+
+  - name: Change alternatives to python
+
+  - name: Check Python Version
+
+  - name: Ansible User add
+
+  - name: Password Enter
+
+  - name: Sshd Configuration
+
+  - name: sshd restart
+
+  - name: User admin permission to nopassword
+
+  - name: Change user to Ansadmin
+
+  - name: change directory back
+
+  - name: make directory ansadmin
+
+  - name: Change the directory user to ansadmin
+
+  - name: Change directory to ansadmin
+
+  - name: make directory .ssh
+
+
+
+
