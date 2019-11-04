@@ -145,7 +145,14 @@
   #- name: Ansible create file with content example
     copy:     
       dest: /etc/concourse/web_environment
-      content: 'hi'
+      content: |
+        CONCOURSE_SESSION_SIGNING_KEY=/etc/concourse/session_signing_key
+        CONCOURSE_TSA_HOST_KEY=/etc/concourse/tsa_host_key
+        CONCOURSE_TSA_AUTHORIZED_KEYS=/etc/concourse/authorized_worker_keys
+        CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
+        CONCOURSE_BASIC_AUTH_USERNAME=admin
+        CONCOURSE_BASIC_AUTH_PASSWORD=secret
+        CONCOURSE_EXTERNAL_URL=http://54.201.83.109:8080
 
   - name: create worker environment with data
   
@@ -153,7 +160,7 @@
     copy:  
       dest: "/etc/concourse/worker_environment"
       content: 'hi1'
-      become: true
+
 
   - name: Create concourse user
 
