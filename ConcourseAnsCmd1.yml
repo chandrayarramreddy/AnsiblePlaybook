@@ -137,7 +137,7 @@
   - name: create web environment with some data
 
   #- name: Ansible create file with content example
-    copy:     
+  - copy:     
       dest: /etc/concourse/web_environment
       content: "{{ mytext }}"
 
@@ -145,11 +145,11 @@
   #- name: create worker environment with data
 
   - name: Ansible create file with content example
-    copy:  
+  - copy:  
       dest: "/etc/concourse/worker_environment"
       content: "{{ mytext2 }}"
       become: true
-      
+
   - name: Create concourse user
 
   #- name: Permission
