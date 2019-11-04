@@ -133,13 +133,11 @@
     
   - name: Make directory of concourse
 
-  #- name: Creates directory
-    file:
-      path: /etc/concourse
-      state: directory
-      register: shell_result1
-      debug:
-       var: shell_result1.stdout_lines
+  # #- name: Creates directory
+  #   file:
+  #     path: /etc/concourse
+  #     state: directory
+    command: mkdir /etc/concourse
 
   - name: create ssh keys
 
