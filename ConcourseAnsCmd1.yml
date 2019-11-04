@@ -78,6 +78,8 @@
   #     group: foo
   #     mode: '0644'
      #or
+  - name: path of the folder
+    command: pwd
   - name: Changing perm to exacutable
     file: dest=. mode=a+x 
   - name: Changing perm to exacutable
@@ -86,12 +88,12 @@
 
   #- name: Move foo to bar
    # command: sudo mv . /usr/bin/concourse
-    copy: src=concourse_linux_amd64 dest=/usr/bin/concourse
+    copy: src=. dest=/usr/bin/concourse
   #- name: Move fly to folder
 
   - name: Move foo to bar
     #command: sudo mv . /usr/bin/concourse
-    copy: src=fly_linux_amd64 dest=/usr/bin/concourse
+    copy: src=. dest=/usr/bin/concourse
   - name: Make directory of concourse
 
   #- name: Creates directory
