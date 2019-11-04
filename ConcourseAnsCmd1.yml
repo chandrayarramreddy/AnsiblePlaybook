@@ -3,6 +3,22 @@
   hosts: all
   become: true
 
+  gather_facts: false
+  vars:
+    mytext: |
+      CONCOURSE_SESSION_SIGNING_KEY=/etc/concourse/session_signing_key
+      CONCOURSE_TSA_HOST_KEY=/etc/concourse/tsa_host_key
+      CONCOURSE_TSA_AUTHORIZED_KEYS=/etc/concourse/authorized_worker_keys
+      CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
+
+      CONCOURSE_BASIC_AUTH_USERNAME=admin
+      CONCOURSE_BASIC_AUTH_PASSWORD=secret
+      CONCOURSE_EXTERNAL_URL=http://54.201.83.109:8080
+    mytext2: |
+        CONCOURSE_WORK_DIR=/var/lib/concourse
+        CONCOURSE_TSA_WORKER_PRIVATE_KEY=/etc/concourse/worker_key
+        CONCOURSE_TSA_PUBLIC_KEY=/etc/concourse/tsa_host_key.pub
+        CONCOURSE_TSA_HOST=127.0.0.1
   tasks:
   #- name: Change to Sudo Su
 
@@ -121,21 +137,19 @@
   - name: create web environment with some data
 
   #- name: Ansible create file with content example
-    copy:   
-      content: " CONCOURSE_SESSION_SIGNING_KEY=/etc/concourse/session_signing_key CONCOURSE_TSA_HOST_KEY=/etc/concourse/tsa_host_key CONCOURSE_TSA_AUTHORIZED_KEYS=/etc/concourse/authorized_worker_keys CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql CONCOURSE_BASIC_AUTH_USERNAME=admin CONCOURSE_BASIC_AUTH_PASSWORD=secret CONCOURSE_EXTERNAL_URL=http://54.201.83.109:8080"
+    copy:     
       dest: /etc/concourse/web_environment
+      content: "{{ mytext }}"
+
 
   #- name: create worker environment with data
 
   - name: Ansible create file with content example
     copy:  
-      content: |
-        CONCOURSE_WORK_DIR=/var/lib/concourse
-        CONCOURSE_TSA_WORKER_PRIVATE_KEY=/etc/concourse/worker_key
-        CONCOURSE_TSA_PUBLIC_KEY=/etc/concourse/tsa_host_key.pub
-        CONCOURSE_TSA_HOST=127.0.0.1
       dest: "/etc/concourse/worker_environment"
-
+      content: "{{ mytext2 }}"
+      become: true
+      
   - name: Create concourse user
 
   #- name: Permission
