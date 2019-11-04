@@ -134,7 +134,8 @@
   #   file:
   #     path: /etc/concourse
   #     state: directory
-  - command: mkdir /etc/concourse
+  - command: sudo mkdir /etc/concourse
+    
     register: ssh1
 
   - debug: 
