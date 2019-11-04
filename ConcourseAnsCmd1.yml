@@ -98,18 +98,22 @@
     command: pwd
   - name: Changing perm to exacutable
     file: dest=/usr/bin/concourse1/concourse_linux_amd64 mode=a+x 
+    remote_src: yes
   - name: Changing perm to exacutable
     file: dest=/usr/bin/concourse1/fly_linux_amd64 mode=a+x
+    remote_src: yes
   - name: Move concourse to folder
 
   #- name: Move foo to bar
    # command: sudo mv . /usr/bin/concourse
     copy: src=/usr/bin/concourse1/concourse_linux_amd64 dest=/usr/bin/concourse
+    remote_src: yes
   #- name: Move fly to folder
 
   - name: Move foo to bar
     #command: sudo mv . /usr/bin/concourse
     copy: src=/usr/bin/concourse1/fly_linux_amd64 dest=/usr/bin/fly
+    remote_src: yes
   - name: Make directory of concourse
 
   #- name: Creates directory
