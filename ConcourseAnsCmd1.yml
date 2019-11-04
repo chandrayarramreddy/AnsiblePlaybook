@@ -97,19 +97,19 @@
   - name: path of the folder
     command: pwd
   - name: Changing perm to exacutable
-    file: dest=/usr/bin/concourse1 mode=a+x 
+    file: dest=/usr/bin/concourse1/concourse_linux_amd64 mode=a+x 
   - name: Changing perm to exacutable
-    file: dest=/usr/bin/concourse1 mode=a+x
+    file: dest=/usr/bin/concourse1/fly_linux_amd64 mode=a+x
   - name: Move concourse to folder
 
   #- name: Move foo to bar
    # command: sudo mv . /usr/bin/concourse
-    copy: src=/usr/bin/concourse1 dest=/usr/bin/concourse
+    copy: src=/usr/bin/concourse1/concourse_linux_amd64 dest=/usr/bin/concourse
   #- name: Move fly to folder
 
   - name: Move foo to bar
     #command: sudo mv . /usr/bin/concourse
-    copy: src=/usr/bin/concourse1 dest=/usr/bin/concourse
+    copy: src=/usr/bin/concourse1/fly_linux_amd64 dest=/usr/bin/fly
   - name: Make directory of concourse
 
   #- name: Creates directory
