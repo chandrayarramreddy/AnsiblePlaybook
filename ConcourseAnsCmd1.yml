@@ -76,7 +76,7 @@
 
   - debug:
       var: shell_result.stdout_lines
-      
+
   - name: Download Concourse
 
   #- name: Download foo.conf
@@ -84,6 +84,12 @@
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
       dest: /usr/bin/concourse1
       mode: u+x
+
+  - shell: pwd
+    register: shell_result1
+
+  - debug:
+      var: shell_result1.stdout_lines
 
   - name: Download fly
 
