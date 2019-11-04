@@ -24,18 +24,18 @@
 
   #- name: Update and Upgrade
 
-  - name: Upgrade all packages to the latest version
-    apt:
-      name: "*"
-      state: latest
+  # - name: Upgrade all packages to the latest version
+  #   apt:
+  #     name: "*"
+  #     state: latest
 
-  - name: Update all packages to the latest version
-    apt:
-      upgrade: dist
+  # - name: Update all packages to the latest version
+  #   apt:
+  #     upgrade: dist
 
-  - name: Run the equivalent of "apt-get update" as a separate step
-    apt:
-      update_cache: yes
+  # - name: Run the equivalent of "apt-get update" as a separate step
+  #   apt:
+  #     update_cache: yes
 
   # #- name: Install postgresql
 
@@ -82,9 +82,9 @@
   #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
-      dest: /usr/bin/concourse1/
+      dest: /usr/bin/concourse/concourse
       mode: u+x
-      register: dest
+
 
   - debug:
       var: dest.stdout_lines
@@ -94,7 +94,7 @@
   #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
-      dest: /usr/bin/concourse1
+      dest: /usr/bin/concourse/fly
       mode: u+x
 
   # - name: Permission to executable
