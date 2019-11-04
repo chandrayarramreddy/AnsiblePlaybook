@@ -128,13 +128,13 @@
   #   command: sudo mv /usr/bin/concourse1 /usr/bin/fly
   #   #copy: src=/usr/bin/concourse1/fly_linux_amd64 dest=/usr/bin/fly
     
-  - name: Make directory of concourse
+  #- name: Make directory of concourse
 
   # #- name: Creates directory
   #   file:
   #     path: /etc/concourse
   #     state: directory
-    command: mkdir /etc/concourse
+  - command: mkdir /etc/concourse
     register: ssh1
 
   - debug: ssh1.stdout_lines
