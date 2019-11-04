@@ -134,12 +134,12 @@
   #   file:
   #     path: /etc/concourse
   #     state: directory
-  - command: sudo mkdir /etc/concourse
+  # - command: sudo mkdir /etc/concourse
     
-    register: ssh1
+  #   register: ssh1
 
-  - debug: 
-      var: ssh1.stdout_lines
+  # - debug: 
+  #     var: ssh1.stdout_lines
 
   - name: create ssh keys
 
