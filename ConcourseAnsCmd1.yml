@@ -37,108 +37,108 @@
     apt:
       update_cache: yes
 
-  #- name: Install postgresql
+  - name: Install postgresql
 
-  # - name: Install PostgreSQL
-  #   command: sudo apt install postgresql postgresql-contrib -y
-  #   # apt: name={{ item }} update_cache=true state=installed
-  #   # with_items:
-  #   #   - postgresql
-  #   #   - postgresql-contrib
-  #   #   - libpq-dev
-  #   #   - python-psycopg2
-  #   # tags: packages
+  - name: Install PostgreSQL
+    command: sudo apt install postgresql postgresql-contrib -y
+    # apt: name={{ item }} update_cache=true state=installed
+    # with_items:
+    #   - postgresql
+    #   - postgresql-contrib
+    #   - libpq-dev
+    #   - python-psycopg2
+    # tags: packages
 
-  # - name: Enable postgresql
-  #   command: sudo systemctl enable postgresql
+  - name: Enable postgresql
+    command: sudo systemctl enable postgresql
 
-  # - name: Ensure the PostgreSQL service is running
-  #   service: name=postgresql state=started enabled=yes
+  - name: Ensure the PostgreSQL service is running
+    service: name=postgresql state=started enabled=yes
 
-  # - name: create user for postgresql
-  #   command: sudo -u postgres createuser concourse
+  - name: create user for postgresql
+    command: sudo -u postgres createuser concourse
 
-  # # - name: Create a PostgreSQL DB server
-  # #   hosts: all
-  # #   sudo: yes
-  # #   sudo_user: root
-  # #   remote_user: concourse
-  # #   vars_files:
-  # #     db_user: concourse
-  # #     db_name: atc
-  # #     db_password: dbpassword
+  # - name: Create a PostgreSQL DB server
+  #   hosts: all
+  #   sudo: yes
+  #   sudo_user: root
+  #   remote_user: concourse
+  #   vars_files:
+  #     db_user: concourse
+  #     db_name: atc
+  #     db_password: dbpassword
 
-  # - name: creating db of postgresql
-  #   command: sudo -u postgres createdb --owner=concourse atc
+  - name: creating db of postgresql
+    command: sudo -u postgres createdb --owner=concourse atc
 
-  # - name: Download Concourse
+  - name: Download Concourse
 
-  # #- name: Download foo.conf
-  #   get_url:
-  #     url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
-  #     dest: .
-  #    # mode: '0440'
+  #- name: Download foo.conf
+    get_url:
+      url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
+      dest: .
+     # mode: '0440'
 
-  # - name: Download fly
+  - name: Download fly
 
-  # #- name: Download foo.conf
-  #   get_url:
-  #     url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
-  #     dest: .
-  # # - name: Permission to executable
+  #- name: Download foo.conf
+    get_url:
+      url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
+      dest: .
+  # - name: Permission to executable
 
-  # # - name: Change file ownership, group and permissions
-  # #   file:
-  # #     path: /etc/foo.conf
-  # #     owner: foo
-  # #     group: foo
-  # #     mode: '0644'
-  #    #or
-  # - name: path of the folder
-  #   command: pwd
-  # - name: Changing perm to exacutable
-  #   file: dest=. mode=a+x 
-  # - name: Changing perm to exacutable
-  #   file: dest=. mode=a+x
-  # - name: Move concourse to folder
-
-  # #- name: Move foo to bar
-  #  # command: sudo mv . /usr/bin/concourse
-  #   copy: src=. dest=/usr/bin/concourse
-  # #- name: Move fly to folder
-
-  # - name: Move foo to bar
-  #   #command: sudo mv . /usr/bin/concourse
-  #   copy: src=. dest=/usr/bin/concourse
-  # - name: Make directory of concourse
-
-  # #- name: Creates directory
+  # - name: Change file ownership, group and permissions
   #   file:
-  #     path: /etc/concourse
-  #     state: directory
+  #     path: /etc/foo.conf
+  #     owner: foo
+  #     group: foo
+  #     mode: '0644'
+     #or
+  - name: path of the folder
+    command: pwd
+  - name: Changing perm to exacutable
+    file: dest=. mode=a+x 
+  - name: Changing perm to exacutable
+    file: dest=. mode=a+x
+  - name: Move concourse to folder
+
+  #- name: Move foo to bar
+   # command: sudo mv . /usr/bin/concourse
+    copy: src=. dest=/usr/bin/concourse
+  #- name: Move fly to folder
+
+  - name: Move foo to bar
+    #command: sudo mv . /usr/bin/concourse
+    copy: src=. dest=/usr/bin/concourse
+  - name: Make directory of concourse
+
+  #- name: Creates directory
+    file:
+      path: /etc/concourse
+      state: directory
 
 
-  # - name: create ssh keys
+  - name: create ssh keys
 
-  # #- name: Move foo to bar
-  #   command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
-  # - name: Move foo to bar
-  #   command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
-  # - name: Move foo to bar
-  #   command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
+  #- name: Move foo to bar
+    command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
+  - name: Move foo to bar
+    command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
+  - name: Move foo to bar
+    command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
 
 
-  # - name: copy keys to authorized
+  - name: copy keys to authorized
   
-  # #- name: Move foo to bar
-  #   command: cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
+  #- name: Move foo to bar
+    command: sudo cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
 
-  - name: Ansible create file with content example
-    copy:
-      dest: "/etc/concourse/remote_server.txt"
-      content: |
-        dog1
-        tiger
+  # - name: Ansible create file with content example
+  #   copy:
+  #     dest: "/etc/concourse/remote_server.txt"
+  #     content: |
+  #       dog1
+  #       tiger
 
   - name: create web environment with some data
 
