@@ -137,7 +137,8 @@
   - command: mkdir /etc/concourse
     register: ssh1
 
-  - debug: ssh1.stdout_lines
+  - debug: 
+      var: ssh1.stdout_lines
 
   - name: create ssh keys
 
@@ -145,7 +146,8 @@
     command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
     register: ssh
 
-  - debug: ssh.stdout_lines
+  - debug: 
+      var: ssh.stdout_lines
   - name: Move foo to bar
     command: ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
   - name: Move foo to bar
