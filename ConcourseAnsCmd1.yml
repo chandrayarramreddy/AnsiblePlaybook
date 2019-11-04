@@ -145,6 +145,8 @@
 
   #- name: Move foo to bar
     command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
+    args:
+      creates: /etc/concourse/tsa_host_key
     register: ssh
 
   - debug: 
