@@ -119,17 +119,17 @@
   #    path: /usr/bin/concourse1/fly_linux_amd64 
   #    mode: a+x
     
-  - name: Move concourse to folder
+  # - name: Move concourse to folder
 
-  #- name: Move foo to bar
-    command: sudo mv /usr/bin/concourse1 /usr/bin/concourse
-    #copy: src=/usr/bin/concourse1/concourse_linux_amd64 dest=/usr/bin/concourse
+  # #- name: Move foo to bar
+  #   command: sudo mv /usr/bin/concourse1 /usr/bin/concourse
+  #   #copy: src=/usr/bin/concourse1/concourse_linux_amd64 dest=/usr/bin/concourse
   
-  #- name: Move fly to folder
+  # #- name: Move fly to folder
 
-  - name: Move foo to bar
-    command: sudo mv /usr/bin/concourse1 /usr/bin/fly
-    #copy: src=/usr/bin/concourse1/fly_linux_amd64 dest=/usr/bin/fly
+  # - name: Move foo to bar
+  #   command: sudo mv /usr/bin/concourse1 /usr/bin/fly
+  #   #copy: src=/usr/bin/concourse1/fly_linux_amd64 dest=/usr/bin/fly
     
   - name: Make directory of concourse
 
