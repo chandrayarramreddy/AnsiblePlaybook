@@ -134,7 +134,7 @@
   #   command: cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
 
 
-  - name: create web environment with some data
+ # - name: create web environment with some data
 
   #- name: Ansible create file with content example
   - copy:     
@@ -144,7 +144,7 @@
 
   #- name: create worker environment with data
 
-  - name: Ansible create file with content example
+  #- name: Ansible create file with content example
   - copy:  
       dest: "/etc/concourse/worker_environment"
       content: "{{ mytext2 }}"
