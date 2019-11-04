@@ -137,9 +137,9 @@
     file:
       path: /etc/concourse
       state: directory
-    register: shell_result1
-    debug:
-      var: shell_result1.stdout_lines
+      register: shell_result1
+      debug:
+       var: shell_result1.stdout_lines
 
   - name: create ssh keys
 
