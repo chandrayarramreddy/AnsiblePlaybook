@@ -106,18 +106,18 @@
   #     group: foo
   #     mode: '0644'
      #or
-  - name: path of the folder
-    command: pwd
+  # - name: path of the folder
+  #   command: pwd
     
-  - name: Changing perm to exacutable
-    file: 
-     path: /usr/bin/concourse1/concourse_linux_amd64 
-     mode: a+x 
+  # - name: Changing perm to exacutable
+  #   file: 
+  #    path: /usr/bin/concourse1/concourse_linux_amd64 
+  #    mode: a+x 
     
-  - name: Changing perm to exacutable
-    file: 
-     path: /usr/bin/concourse1/fly_linux_amd64 
-     mode: a+x
+  # - name: Changing perm to exacutable
+  #   file: 
+  #    path: /usr/bin/concourse1/fly_linux_amd64 
+  #    mode: a+x
     
   - name: Move concourse to folder
 
