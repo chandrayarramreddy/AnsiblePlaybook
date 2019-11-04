@@ -37,7 +37,7 @@
     apt:
       update_cache: yes
 
-  - name: Install postgresql
+  # #- name: Install postgresql
 
   - name: Install PostgreSQL
     command: sudo apt install postgresql postgresql-contrib -y
