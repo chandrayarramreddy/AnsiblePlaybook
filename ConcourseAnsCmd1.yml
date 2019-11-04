@@ -82,14 +82,12 @@
   #- name: Download foo.conf
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
-      dest: /usr/bin/concourse1
+      dest: /usr/bin/concourse1/
       mode: u+x
-
-  - shell: pwd
-    register: shell_result1
+      register: dest
 
   - debug:
-      var: shell_result1.stdout_lines
+      var: dest.stdout_lines
 
   - name: Download fly
 
