@@ -52,8 +52,8 @@
   - name: Enable postgresql
     command: sudo systemctl enable postgresql
 
-  - name: Ensure the PostgreSQL service is running
-    service: name=postgresql state=started enabled=yes
+  # - name: Ensure the PostgreSQL service is running
+  #   service: name=postgresql state=started enabled=yes
 
   - name: create user for postgresql
     command: sudo -u postgres createuser concourse
@@ -211,7 +211,7 @@
         CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
         CONCOURSE_BASIC_AUTH_USERNAME=admin
         CONCOURSE_BASIC_AUTH_PASSWORD=secret
-        CONCOURSE_EXTERNAL_URL=http://34.216.141.112:8080
+        CONCOURSE_EXTERNAL_URL=http://54.213.146.224:8080
 
   - name: create worker environment with data
   
