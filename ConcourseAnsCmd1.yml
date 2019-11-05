@@ -55,8 +55,8 @@
   - name: Ensure the PostgreSQL service is running
     service: name=postgresql state=started enabled=yes
 
-  # - name: create user for postgresql
-  #   command: sudo -u postgres createuser concourse
+  - name: create user for postgresql
+    command: sudo -u postgres createuser concourse
 
   # - name: Create a PostgreSQL DB server
   #   hosts: all
@@ -68,8 +68,8 @@
   #     db_name: atc
   #     db_password: dbpassword
 
-  # - name: creating db of postgresql
-  #   command: sudo -u postgres createdb --owner=concourse atc
+  - name: creating db of postgresql
+    command: sudo -u postgres createdb --owner=concourse atc
 
   - shell: pwd
     register: shell_result
@@ -155,10 +155,18 @@
     command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
     args:
       creates: /etc/concourse/worker_key
+    register: ssh1
+
+  - debug: 
+      var: ssh1.stdout_lines
   - name: create ssh session_signing_key
     command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
     args:
       creates: /etc/concourse/session_signing_key
+    register: ssh3
+
+  - debug: 
+      var: ssh3.stdout_lines
 
 
   - name: copy keys to authorized
@@ -185,7 +193,7 @@
         CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
         CONCOURSE_BASIC_AUTH_USERNAME=admin
         CONCOURSE_BASIC_AUTH_PASSWORD=secret
-        CONCOURSE_EXTERNAL_URL=http://54.201.83.109:8080
+        CONCOURSE_EXTERNAL_URL=http://34.219.160.248:8080
 
   - name: create worker environment with data
   
