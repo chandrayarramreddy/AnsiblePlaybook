@@ -81,7 +81,7 @@
     file:
       path: /usr/bin/concourse
       state: directory
-      become: root
+      remote_src: yes
 
   - name: Download Concourse
 
