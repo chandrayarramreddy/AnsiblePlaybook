@@ -91,7 +91,7 @@
       dest: /usr/bin/concourse
       mode: u+x
 
-  - shell: cocourse -version
+  - shell: concourse -version
     register: shell_result4
 
   - debug:
