@@ -147,6 +147,12 @@
   # - debug: 
   #     var: ssh1.stdout_lines
 
+  - name: ansible create directory example
+    file:
+      path: /etc/concourse
+      state: directory
+      remote_src: yes
+
   - name: create ssh tsa keys
 
   #- name: Move foo to bar
