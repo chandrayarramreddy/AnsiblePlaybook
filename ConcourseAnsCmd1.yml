@@ -24,18 +24,18 @@
 
   #- name: Update and Upgrade
 
-  # - name: Upgrade all packages to the latest version
-  #   apt:
-  #     name: "*"
-  #     state: latest
+  - name: Upgrade all packages to the latest version
+    apt:
+      name: "*"
+      state: latest
 
-  # - name: Update all packages to the latest version
-  #   apt:
-  #     upgrade: dist
+  - name: Update all packages to the latest version
+    apt:
+      upgrade: dist
 
-  # - name: Run the equivalent of "apt-get update" as a separate step
-  #   apt:
-  #     update_cache: yes
+  - name: Run the equivalent of "apt-get update" as a separate step
+    apt:
+      update_cache: yes
 
   # #- name: Install postgresql
 
@@ -55,8 +55,8 @@
   - name: Ensure the PostgreSQL service is running
     service: name=postgresql state=started enabled=yes
 
-  # - name: create user for postgresql
-  #   command: sudo -u postgres createuser concourse
+  - name: create user for postgresql
+    command: sudo -u postgres createuser concourse
 
   # - name: Create a PostgreSQL DB server
   #   hosts: all
@@ -68,8 +68,8 @@
   #     db_name: atc
   #     db_password: dbpassword
 
-  # - name: creating db of postgresql
-  #   command: sudo -u postgres createdb --owner=concourse atc
+  - name: creating db of postgresql
+    command: sudo -u postgres createdb --owner=concourse atc
 
   - shell: pwd
     register: shell_result
@@ -263,6 +263,7 @@
         [Install]
         WantedBy=multi-user.target
       dest: /etc/systemd/system/concourse-web.service
+      
   - name: create worker.service
 
   #- name: Ansible create file with content example
