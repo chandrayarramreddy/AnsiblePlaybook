@@ -92,11 +92,11 @@
       dest: /usr/bin/concourse
       #mode: a+x
 
-  - shell: sudo concourse -version
-    register: shell_result4
+  # - shell: sudo concourse -version
+  #   register: shell_result4
 
-  - debug:
-      var: shell_result4.stdout_lines
+  # - debug:
+  #     var: shell_result4.stdout_lines
 
   - shell: sudo ls -al /usr/bin/concourse
     register: shell_result5
