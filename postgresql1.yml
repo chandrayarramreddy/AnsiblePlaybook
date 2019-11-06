@@ -7,7 +7,7 @@
     apt: update_cache=yes
 
   - name: Install PostgreSQL
-    apt: name={{ item }} update_cache=yes state=installed
+    apt: name={{ item }} update_cache=yes state=latest
     with_items:
       - postgresql
       - postgresql-contrib
