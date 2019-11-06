@@ -89,7 +89,7 @@
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
       dest: /usr/bin/concourse
-      mode: a+x
+      #mode: a+x
 
   - shell: concourse -version
     register: shell_result4
@@ -109,10 +109,17 @@
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
       dest: /usr/bin/fly
-      mode: a+x
+      #mode: a+x
 
-  - name: Change of User for Concourse
-    file: path=/usr/bin/concourse owner=ansadmin group=ansadmin mode=0775 state=directory recurse=yes
+  # - name: Change of User for Concourse
+  #   file: path=/usr/bin/concourse owner=ansadmin group=ansadmin mode=0775 state=directory recurse=yes
+
+  - name: Change file ownership, group and permissions
+    file:
+    path: /usr/bin/concourse
+    owner: ansadmin
+    group: ansadmin
+    mode: '00775'
 
   - shell: ls -al /usr/bin/concourse
     register: shell_result6
@@ -121,7 +128,10 @@
       var: shell_result6.stdout_lines
 
   - name: Change of User for fly
-    file: path=/usr/bin/fly owner=ansadmin group=ansadmin mode=0775 state=directory recurse=yes
+    file: path=/usr/bin/fly 
+    owner: ansadmin 
+    group: ansadmin 
+    mode: 0775
 
 
 
