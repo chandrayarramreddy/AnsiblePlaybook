@@ -1,7 +1,7 @@
 ---
 - name: Create a PostgreSQL DB server
   hosts: dbserver
-  sudo: yes
+  become: true
 
 
   tasks:
