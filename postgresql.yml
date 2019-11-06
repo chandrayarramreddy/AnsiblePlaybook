@@ -2,8 +2,7 @@
 - name: Create a PostgreSQL DB server
   hosts: dbserver
   sudo: yes
-  sudo_user: root
-  remote_user: ubuntu
+
 
   tasks:
   - name: Install PostgreSQL
