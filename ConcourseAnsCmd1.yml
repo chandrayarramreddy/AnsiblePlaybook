@@ -211,7 +211,7 @@
         CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
         CONCOURSE_BASIC_AUTH_USERNAME=admin
         CONCOURSE_BASIC_AUTH_PASSWORD=secret
-        CONCOURSE_EXTERNAL_URL=http://54.213.146.224:8080
+        CONCOURSE_EXTERNAL_URL=http://34.219.36.183:8080
 
   - name: create worker environment with data
   
@@ -250,6 +250,7 @@
   #- name: Ansible create file with content example
     copy:
       content: |
+
         [Unit]
         Description=Concourse CI web process (ATC and TSA)
         After=postgresql.service
@@ -269,6 +270,7 @@
   #- name: Ansible create file with content example
     copy:
       content: |
+
         [Unit]
         Description=Concourse CI worker process
         After=concourse-web.service
@@ -282,11 +284,13 @@
         [Install]
         WantedBy=multi-user.target
       dest: /etc/systemd/system/concourse-worker.service
-  - name: start web and worker
+  - name: start web
 
   #- name: Permission mode
-    command: sudo systemctl start concourse-web concourse-worker
+    command: sudo systemctl start concourse-web
 
+  - name: start  worker
+    command: sudo systemctl start concourse-worker
   - name: enable web and worker
 
   #- name: Permission mode
