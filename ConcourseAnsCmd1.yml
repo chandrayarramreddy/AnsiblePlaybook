@@ -39,24 +39,24 @@
 
   # #- name: Install postgresql
 
-  - name: Install PostgreSQL
-    command: sudo apt install postgresql postgresql-contrib -y
-    # apt: name={{ item }} update_cache=true state=installed
-    # with_items:
-    #   - postgresql
-    #   - postgresql-contrib
-    #   - libpq-dev
-    #   - python-psycopg2
-    # tags: packages
+  # - name: Install PostgreSQL
+  #   command: sudo apt install postgresql postgresql-contrib -y
+  #   # apt: name={{ item }} update_cache=true state=installed
+  #   # with_items:
+  #   #   - postgresql
+  #   #   - postgresql-contrib
+  #   #   - libpq-dev
+  #   #   - python-psycopg2
+  #   # tags: packages
 
-  - name: Enable postgresql
-    command: sudo systemctl enable postgresql
+  # - name: Enable postgresql
+  #   command: sudo systemctl enable postgresql
 
-  # - name: Ensure the PostgreSQL service is running
-  #   service: name=postgresql state=started enabled=yes
+  # # - name: Ensure the PostgreSQL service is running
+  # #   service: name=postgresql state=started enabled=yes
 
-  - name: create user for postgresql
-    command: sudo -u postgres createuser concourse
+  # - name: create user for postgresql
+  #   command: sudo -u postgres createuser concourse
 
   # - name: Create a PostgreSQL DB server
   #   hosts: all
@@ -68,8 +68,8 @@
   #     db_name: atc
   #     db_password: dbpassword
 
-  - name: creating db of postgresql
-    command: sudo -u postgres createdb --owner=concourse atc
+  # - name: creating db of postgresql
+  #   command: sudo -u postgres createdb --owner=concourse atc
 
   - shell: pwd
     register: shell_result
@@ -77,11 +77,11 @@
   - debug:
       var: shell_result.stdout_lines
 
-  - name: ansible create directory example
-    file:
-      path: /usr/bin
-      state: directory
-      remote_src: yes
+  # - name: ansible create directory example
+  #   file:
+  #     path: /usr/bin
+  #     state: directory
+  #     remote_src: yes
 
   - name: Download Concourse
 
@@ -89,7 +89,7 @@
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
       dest: /usr/bin/concourse
-      mode: u+x
+      mode: a+x
 
   - shell: concourse -version
     register: shell_result4
@@ -97,6 +97,11 @@
   - debug:
       var: shell_result4.stdout_lines
 
+  - shell: ls -al /usr/bin/concourse
+    register: shell_result5
+
+  - debug:
+      var: shell_result5.stdout_lines
 
   - name: Download fly
 
@@ -104,7 +109,21 @@
     get_url:
       url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
       dest: /usr/bin/fly
-      mode: u+x
+      mode: a+x
+
+  - name: Change of User for Concourse
+    file: path=/usr/bin/concourse owner=ansadmin group=ansadmin mode=0775 state=directory recurse=yes
+
+  - shell: ls -al /usr/bin/concourse
+    register: shell_result6
+
+  - debug:
+      var: shell_result6.stdout_lines
+
+  - name: Change of User for fly
+    file: path=/usr/bin/fly owner=ansadmin group=ansadmin mode=0775 state=directory recurse=yes
+
+
 
   # - name: Permission to executable
 
@@ -153,151 +172,151 @@
   # - debug: 
   #     var: ssh1.stdout_lines
 
-  - name: ansible create directory example
-    file:
-      path: /etc/concourse
-      state: directory
-      remote_src: yes
+  # - name: ansible create directory example
+  #   file:
+  #     path: /etc/concourse
+  #     state: directory
+  #     remote_src: yes
 
-  - name: create ssh tsa keys
+  # - name: create ssh tsa keys
 
-  #- name: Move foo to bar
-    command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
-    args:
-      creates: /etc/concourse/tsa_host_key
-    register: ssh
+  # #- name: Move foo to bar
+  #   command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
+  #   args:
+  #     creates: /etc/concourse/tsa_host_key
+  #   register: ssh
 
-  - debug: 
-      var: ssh.stdout_lines
-  - name: create ssh worker keys
-    command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
-    args:
-      creates: /etc/concourse/worker_key
-    register: ssh1
+  # - debug: 
+  #     var: ssh.stdout_lines
+  # - name: create ssh worker keys
+  #   command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
+  #   args:
+  #     creates: /etc/concourse/worker_key
+  #   register: ssh1
 
-  - debug: 
-      var: ssh1.stdout_lines
-  - name: create ssh session_signing_key
-    command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
-    args:
-      creates: /etc/concourse/session_signing_key
-    register: ssh3
+  # - debug: 
+  #     var: ssh1.stdout_lines
+  # - name: create ssh session_signing_key
+  #   command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
+  #   args:
+  #     creates: /etc/concourse/session_signing_key
+  #   register: ssh3
 
-  - debug: 
-      var: ssh3.stdout_lines
+  # - debug: 
+  #     var: ssh3.stdout_lines
 
 
-  - name: copy keys to authorized
+  # - name: copy keys to authorized
   
-  #- name: Move foo to bar
-    command: sudo cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
+  # #- name: Move foo to bar
+  #   command: sudo cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
 
-  # - name: Ansible create file with content example
-  #   copy:
-  #     dest: "/etc/concourse/remote_server.txt"
+  # # - name: Ansible create file with content example
+  # #   copy:
+  # #     dest: "/etc/concourse/remote_server.txt"
+  # #     content: |
+  # #       dog1
+  # #       tiger
+
+  # - name: create web environment with some data
+
+  # #- name: Ansible create file with content example
+  #   copy:     
+  #     dest: /etc/concourse/web_environment
   #     content: |
-  #       dog1
-  #       tiger
+  #       CONCOURSE_SESSION_SIGNING_KEY=/etc/concourse/session_signing_key
+  #       CONCOURSE_TSA_HOST_KEY=/etc/concourse/tsa_host_key
+  #       CONCOURSE_TSA_AUTHORIZED_KEYS=/etc/concourse/authorized_worker_keys
+  #       CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
+  #       CONCOURSE_BASIC_AUTH_USERNAME=admin
+  #       CONCOURSE_BASIC_AUTH_PASSWORD=secret
+  #       CONCOURSE_EXTERNAL_URL=http://34.219.36.183:8080
 
-  - name: create web environment with some data
-
-  #- name: Ansible create file with content example
-    copy:     
-      dest: /etc/concourse/web_environment
-      content: |
-        CONCOURSE_SESSION_SIGNING_KEY=/etc/concourse/session_signing_key
-        CONCOURSE_TSA_HOST_KEY=/etc/concourse/tsa_host_key
-        CONCOURSE_TSA_AUTHORIZED_KEYS=/etc/concourse/authorized_worker_keys
-        CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
-        CONCOURSE_BASIC_AUTH_USERNAME=admin
-        CONCOURSE_BASIC_AUTH_PASSWORD=secret
-        CONCOURSE_EXTERNAL_URL=http://34.219.36.183:8080
-
-  - name: create worker environment with data
+  # - name: create worker environment with data
   
-  #- name: Ansible create file with content example
-    copy:  
-      dest: "/etc/concourse/worker_environment"
-      content:  |
-        CONCOURSE_WORK_DIR=/var/lib/concourse
-        CONCOURSE_TSA_WORKER_PRIVATE_KEY=/etc/concourse/worker_key
-        CONCOURSE_TSA_PUBLIC_KEY=/etc/concourse/tsa_host_key.pub
-        CONCOURSE_TSA_HOST=127.0.0.1
+  # #- name: Ansible create file with content example
+  #   copy:  
+  #     dest: "/etc/concourse/worker_environment"
+  #     content:  |
+  #       CONCOURSE_WORK_DIR=/var/lib/concourse
+  #       CONCOURSE_TSA_WORKER_PRIVATE_KEY=/etc/concourse/worker_key
+  #       CONCOURSE_TSA_PUBLIC_KEY=/etc/concourse/tsa_host_key.pub
+  #       CONCOURSE_TSA_HOST=127.0.0.1
 
 
-  - name: Create concourse user
+  # - name: Create concourse user
 
-  #- name: Permission
-    command: sudo adduser --system --group concourse
+  # #- name: Permission
+  #   command: sudo adduser --system --group concourse
 
-  - name: change user permissions
+  # - name: change user permissions
 
-  #- name: Permission
-    command: sudo chown -R concourse:concourse /etc/concourse
+  # #- name: Permission
+  #   command: sudo chown -R concourse:concourse /etc/concourse
 
-  - name: change mode web permissions
+  # - name: change mode web permissions
 
-  #- name: Permission mode
-    command: sudo chmod 600 /etc/concourse/web_environment
+  # #- name: Permission mode
+  #   command: sudo chmod 600 /etc/concourse/web_environment
 
-  - name: change mode worker permissions
+  # - name: change mode worker permissions
 
-  #- name: Permission mode
-    command: sudo chmod 600 /etc/concourse/worker_environment
+  # #- name: Permission mode
+  #   command: sudo chmod 600 /etc/concourse/worker_environment
 
-  - name: create web.service
+  # - name: create web.service
 
-  #- name: Ansible create file with content example
-    copy:
-      content: |
+  # #- name: Ansible create file with content example
+  #   copy:
+  #     content: |
 
-        [Unit]
-        Description=Concourse CI web process (ATC and TSA)
-        After=postgresql.service
+  #       [Unit]
+  #       Description=Concourse CI web process (ATC and TSA)
+  #       After=postgresql.service
 
-        [Service]
-        User=concourse
-        Restart=on-failure
-        EnvironmentFile=/etc/concourse/web_environment
-        ExecStart=/usr/bin/concourse web
+  #       [Service]
+  #       User=concourse
+  #       Restart=on-failure
+  #       EnvironmentFile=/etc/concourse/web_environment
+  #       ExecStart=/usr/bin/concourse web
 
-        [Install]
-        WantedBy=multi-user.target
-      dest: /etc/systemd/system/concourse-web.service
+  #       [Install]
+  #       WantedBy=multi-user.target
+  #     dest: /etc/systemd/system/concourse-web.service
 
-  - name: create worker.service
+  # - name: create worker.service
 
-  #- name: Ansible create file with content example
-    copy:
-      content: |
+  # #- name: Ansible create file with content example
+  #   copy:
+  #     content: |
 
-        [Unit]
-        Description=Concourse CI worker process
-        After=concourse-web.service
+  #       [Unit]
+  #       Description=Concourse CI worker process
+  #       After=concourse-web.service
 
-        [Service]
-        User=root
-        Restart=on-failure
-        EnvironmentFile=/etc/concourse/worker_environment
-        ExecStart=/usr/bin/concourse worker
+  #       [Service]
+  #       User=root
+  #       Restart=on-failure
+  #       EnvironmentFile=/etc/concourse/worker_environment
+  #       ExecStart=/usr/bin/concourse worker
 
-        [Install]
-        WantedBy=multi-user.target
-      dest: /etc/systemd/system/concourse-worker.service
-  - name: start web
+  #       [Install]
+  #       WantedBy=multi-user.target
+  #     dest: /etc/systemd/system/concourse-worker.service
+  # - name: start web
 
-  #- name: Permission mode
-    command: sudo systemctl start concourse-web
+  # #- name: Permission mode
+  #   command: sudo systemctl start concourse-web
 
-  - name: start  worker
-    command: sudo systemctl start concourse-worker
-  - name: enable web and worker
+  # - name: start  worker
+  #   command: sudo systemctl start concourse-worker
+  # - name: enable web and worker
 
-  #- name: Permission mode
-    command: sudo systemctl enable concourse-web concourse-worker
+  # #- name: Permission mode
+  #   command: sudo systemctl enable concourse-web concourse-worker
 
-  - name: status of web and worker
+  # - name: status of web and worker
 
-  #- name: Permission mode
-    command: sudo systemctl status concourse-web concourse-worker
+  # #- name: Permission mode
+  #   command: sudo systemctl status concourse-web concourse-worker
 
