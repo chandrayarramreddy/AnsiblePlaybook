@@ -116,10 +116,10 @@
 
   - name: Change file ownership, group and permissions
     file:
-    path: /usr/bin/concourse
-    owner: ansadmin
-    group: ansadmin
-    mode: '00775'
+     path: /usr/bin/concourse
+     owner: ansadmin
+     group: ansadmin
+     mode: '00775'
 
   - shell: ls -al /usr/bin/concourse
     register: shell_result6
@@ -128,10 +128,11 @@
       var: shell_result6.stdout_lines
 
   - name: Change of User for fly
-    file: path=/usr/bin/fly 
-    owner: ansadmin 
-    group: ansadmin 
-    mode: 0775
+    file: 
+     path: /usr/bin/fly 
+     owner: ansadmin 
+     group: ansadmin 
+     mode: 0775
 
 
 
