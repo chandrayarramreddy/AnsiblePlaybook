@@ -4,7 +4,7 @@
   sudo: yes
   sudo_user: root
   remote_user: ubuntu
-
+  tasks:
 - name: Install PostgreSQL
   apt: name={{ item }} update_cache=true state=installed
   with_items:
