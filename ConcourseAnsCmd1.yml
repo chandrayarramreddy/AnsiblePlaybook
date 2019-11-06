@@ -241,7 +241,7 @@
         CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
         CONCOURSE_BASIC_AUTH_USERNAME=admin
         CONCOURSE_BASIC_AUTH_PASSWORD=secret
-        CONCOURSE_EXTERNAL_URL=http://34.219.36.183:8080
+        CONCOURSE_EXTERNAL_URL=http://34.217.77.7:8080
 
   - name: create worker environment with data
   
