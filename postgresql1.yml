@@ -12,7 +12,6 @@
         - postgresql
         - postgresql-contrib
         - libpq-dev
-        - python-psycopg2
 
 - hosts: dbserver
   become: yes
