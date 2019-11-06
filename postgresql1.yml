@@ -1,19 +1,17 @@
 ---
 - hosts: dbserver
   become: yes
-  gather_facts: no
 
   tasks:
   - name: ensure apt cache is up to date
     apt: update_cache=yes
   - name: ensure packages are installed
-    apt: name= postgresql
+    apt: name=postgresql
 
 
 - hosts: dbserver
   become: yes
   become_user: postgres
-  gather_facts: no
 
   vars:
     dbname: atc
