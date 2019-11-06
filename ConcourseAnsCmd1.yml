@@ -41,7 +41,7 @@
 
   - name: Install PostgreSQL
     command: sudo apt install postgresql postgresql-contrib -y
-    
+
   #   # apt: name={{ item }} update_cache=true state=installed
   #   # with_items:
   #   #   - postgresql
@@ -92,13 +92,13 @@
       dest: /usr/bin/concourse
       #mode: a+x
 
-  - shell: concourse -version
+  - shell: sudo concourse -version
     register: shell_result4
 
   - debug:
       var: shell_result4.stdout_lines
 
-  - shell: ls -al /usr/bin/concourse
+  - shell: sudo ls -al /usr/bin/concourse
     register: shell_result5
 
   - debug:
