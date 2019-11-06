@@ -56,8 +56,8 @@
   # # - name: Ensure the PostgreSQL service is running
   # #   service: name=postgresql state=started enabled=yes
 
-  # - name: create user for postgresql
-  #   command: sudo -u postgres createuser concourse
+  - name: create user for postgresql
+    command: sudo -u postgres createuser concourse
 
   # - name: Create a PostgreSQL DB server
   #   hosts: all
@@ -69,8 +69,8 @@
   #     db_name: atc
   #     db_password: dbpassword
 
-  # - name: creating db of postgresql
-  #   command: sudo -u postgres createdb --owner=concourse atc
+  - name: creating db of postgresql
+    command: sudo -u postgres createdb --owner=concourse atc
 
   - shell: pwd
     register: shell_result
