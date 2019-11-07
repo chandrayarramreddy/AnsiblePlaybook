@@ -31,6 +31,16 @@
       - python-psycopg2
     tags:
       - packages
+      
+  - name: create a database
+    postgresql_db:
+        name: atc
+        encoding: UTF-8
+        template: template0
+        state: present
+    become_user: postgres
+    become: yes
+
   - name: Connect to acme database, create django user, and grant access to database and products table
     postgresql_user:
      db: atc
