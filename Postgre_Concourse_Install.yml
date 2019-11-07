@@ -42,12 +42,12 @@
       tags:
         - packages
 
-    - name: create admin user
-      action: user name=postgres group=postgres state=present
-      register: User1
+    # - name: create admin user
+    #   action: user name=postgres group=postgres state=present
+    #   register: User1
 
-    - debug:
-        var: User1.stdout_lines
+    # - debug:
+    #     var: User1.stdout_lines
 
     - name: create a database
       postgresql_db:
@@ -55,7 +55,7 @@
           encoding: UTF-8
           template: template0
           state: present
-      become_user: postgres
+      become_user: concourse
       become: yes
       
     - name: Ensure the PostgreSQL service is running
