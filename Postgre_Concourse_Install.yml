@@ -99,10 +99,10 @@
 
     - name: Changing file ownership, group and permissions for concourse
       file:
-      path: /usr/bin/concourse
-      owner: ansadmin
-      group: ansadmin
-      mode: '00775'
+        path: /usr/bin/concourse
+        owner: ansadmin
+        group: ansadmin
+        mode: '00775'
 
     - shell: ls -al /usr/bin/concourse
       register: concoursepermission
@@ -112,10 +112,10 @@
 
     - name: Changing file ownership, group and permissions for fly
       file: 
-      path: /usr/bin/fly 
-      owner: ansadmin 
-      group: ansadmin 
-      mode: 0775
+        path: /usr/bin/fly 
+        owner: ansadmin 
+        group: ansadmin 
+        mode: 0775
 
     - name: Creating directory for concourse files
       file:
