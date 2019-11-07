@@ -133,6 +133,12 @@
         group: ansadmin 
         mode: 0775
 
+    - shell: ls -al /usr/bin/fly
+      register: flypermission
+
+    - debug:
+        var: fly.stdout_lines      
+
     - name: Creating directory for concourse files
       file:
         path: /etc/concourse
