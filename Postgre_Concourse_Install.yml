@@ -55,9 +55,17 @@
           encoding: UTF-8
           template: template0
           state: present
-      become_user: concourse
+      become_user: postgres
       become: yes
-      
+
+    - name: Ensure user has access to the database
+      sudo_user: postgres
+      postgresql_user: db=atc
+                  name=concourse
+               
+                  priv=ALL
+                  state=present
+      #    password={{ db_password }}
     - name: Ensure the PostgreSQL service is running
       service: name=postgresql state=started enabled=yes
 
