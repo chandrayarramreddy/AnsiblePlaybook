@@ -44,6 +44,10 @@
 
     - name: create admin user
       action: user name=postgres group=postgres state=present
+      register: User1
+
+    - debug:
+        var: User1.stdout_lines
 
     - name: create a database
       postgresql_db:
@@ -56,6 +60,7 @@
       
     - name: Ensure the PostgreSQL service is running
       service: name=postgresql state=started enabled=yes
+
 
     # - name: restart postgresql
     #   service: name=postgresql state=restarted
