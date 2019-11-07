@@ -31,7 +31,12 @@
       - python-psycopg2
     tags:
       - packages
-  
+  - name: Connect to acme database, create django user, and grant access to database and products table
+    postgresql_user:
+     db: atc
+     name: postgres
+     password: postgres
+     
   - name: Ensure the PostgreSQL service is running
     service: name=postgresql state=started enabled=yes
 
