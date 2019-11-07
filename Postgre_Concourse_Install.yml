@@ -59,7 +59,7 @@
       become: yes
 
     - name: Ensure user has access to the database
-      sudo_user: postgres
+      become_user: postgres
       postgresql_user: db=atc
                   name=concourse
                
