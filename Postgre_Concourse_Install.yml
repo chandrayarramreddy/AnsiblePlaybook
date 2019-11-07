@@ -42,6 +42,9 @@
       tags:
         - packages
 
+    - name: create admin user
+      action: user name=postgres group=postgres state=present
+
     - name: create a database
       postgresql_db:
           name: atc
