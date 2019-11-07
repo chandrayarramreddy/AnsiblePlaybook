@@ -1,9 +1,17 @@
 ---
 - name: Installing Postgresql and Concourse
-  hosts: postgre
+  hosts: concourse
   become: true 
 
   tasks:
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+
+    - name: Run the equivalent of "apt-get update" as a separate step
+      apt:
+        update_cache: yes
 
     - name: Ensure bash, OpenSSl, and libssl are the latest versions
       apt: name={{ item }} update_cache=true state=latest
@@ -12,6 +20,7 @@
         - openssl
         - libssl-dev
         - libssl-doc
+        - python3-psycopg2
       tags: packages
 
     - name: Install PostgreSQL
@@ -25,7 +34,6 @@
       tags: packages
 
     - name: install prerequisites
-      #sudo: true
       apt: name={{ item }} state=latest
       with_items:
         - libpq-dev
@@ -46,6 +54,186 @@
     - name: Ensure the PostgreSQL service is running
       service: name=postgresql state=started enabled=yes
 
-    - name: restart postgresql
-      service: name=postgresql state=restarted
-    
+    # - name: restart postgresql
+    #   service: name=postgresql state=restarted
+
+    # - name: Install PostgreSQL
+    #   command: sudo apt install postgresql postgresql-contrib -y
+
+    # - name: Enable postgresql
+    #   command: sudo systemctl enable postgresql
+
+    # - name: create user for postgresql
+    #   command: sudo -u postgres createuser concourse
+
+    # - name: creating db of postgresql
+    #   command: sudo -u postgres createdb --owner=concourse atc
+
+    - shell: pwd
+      register: path
+
+    - debug:
+        var: path.stdout_lines
+
+    - name: ansible create directory example
+      file:
+        path: /usr/bin
+        state: directory
+        remote_src: yes
+
+    - name: Downloading Concourse
+      get_url:
+        url: https://github.com/concourse/concourse/releases/download/v3.9.0/concourse_linux_amd64
+        dest: /usr/bin/concourse
+
+    - shell: sudo ls -al /usr/bin/concourse
+      register: permission
+
+    - debug:
+        var: permission.stdout_lines
+
+    - name: Downloading fly
+      get_url:
+        url: https://github.com/concourse/concourse/releases/download/v3.9.0/fly_linux_amd64
+        dest: /usr/bin/fly
+
+    - name: Changing file ownership, group and permissions for concourse
+      file:
+      path: /usr/bin/concourse
+      owner: ansadmin
+      group: ansadmin
+      mode: '00775'
+
+    - shell: ls -al /usr/bin/concourse
+      register: concoursepermission
+
+    - debug:
+        var: concoursepermission.stdout_lines
+
+    - name: Changing file ownership, group and permissions for fly
+      file: 
+      path: /usr/bin/fly 
+      owner: ansadmin 
+      group: ansadmin 
+      mode: 0775
+
+    - name: Creating directory for concourse files
+      file:
+        path: /etc/concourse
+        state: directory
+        remote_src: yes
+
+    - name: Creating ssh tsa keys
+      command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/tsa_host_key
+      args:
+        creates: /etc/concourse/tsa_host_key
+      register: ssh1
+
+    - debug: 
+        var: ssh1.stdout_lines
+
+    - name: create ssh worker keys
+      command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/worker_key
+      args:
+        creates: /etc/concourse/worker_key
+      register: ssh2
+
+    - debug: 
+        var: ssh2.stdout_lines
+
+    - name: create ssh session_signing_key
+      command: sudo ssh-keygen -t rsa -q -N '' -f /etc/concourse/session_signing_key
+      args:
+        creates: /etc/concourse/session_signing_key
+      register: ssh3
+
+    - debug: 
+        var: ssh3.stdout_lines
+
+    - name: copy keys to authorized
+      command: sudo cp /etc/concourse/worker_key.pub /etc/concourse/authorized_worker_keys
+
+
+    - name: Creating web environment with data required
+      copy:     
+        dest: /etc/concourse/web_environment
+        content: |
+          CONCOURSE_SESSION_SIGNING_KEY=/etc/concourse/session_signing_key
+          CONCOURSE_TSA_HOST_KEY=/etc/concourse/tsa_host_key
+          CONCOURSE_TSA_AUTHORIZED_KEYS=/etc/concourse/authorized_worker_keys
+          CONCOURSE_POSTGRES_SOCKET=/var/run/postgresql
+          CONCOURSE_BASIC_AUTH_USERNAME=admin
+          CONCOURSE_BASIC_AUTH_PASSWORD=secret
+          CONCOURSE_EXTERNAL_URL=http://34.217.77.7:8080
+
+    - name: create worker environment with data required
+      copy:  
+        dest: "/etc/concourse/worker_environment"
+        content:  |
+          CONCOURSE_WORK_DIR=/var/lib/concourse
+          CONCOURSE_TSA_WORKER_PRIVATE_KEY=/etc/concourse/worker_key
+          CONCOURSE_TSA_PUBLIC_KEY=/etc/concourse/tsa_host_key.pub
+          CONCOURSE_TSA_HOST=127.0.0.1
+
+
+    - name: Creating concourse user group
+      command: sudo adduser --system --group concourse
+
+    - name: Changing user permissions for /etc/concourse
+      command: sudo chown -R concourse:concourse /etc/concourse
+
+    - name: Changing permissions web
+      command: sudo chmod 600 /etc/concourse/web_environment
+
+    - name: Changing worker permissions
+      command: sudo chmod 600 /etc/concourse/worker_environment
+
+    - name: Creating web.service
+      copy:
+        content: |
+
+          [Unit]
+          Description=Concourse CI web process (ATC and TSA)
+          After=postgresql.service
+
+          [Service]
+          User=concourse
+          Restart=on-failure
+          EnvironmentFile=/etc/concourse/web_environment
+          ExecStart=/usr/bin/concourse web
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/concourse-web.service
+
+    - name: Creating worker.service
+      copy:
+        content: |
+
+          [Unit]
+          Description=Concourse CI worker process
+          After=concourse-web.service
+
+          [Service]
+          User=root
+          Restart=on-failure
+          EnvironmentFile=/etc/concourse/worker_environment
+          ExecStart=/usr/bin/concourse worker
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/concourse-worker.service
+
+    - name: Starting web service
+      command: sudo systemctl start concourse-web
+
+    - name: Starting worker service
+      command: sudo systemctl start concourse-worker
+
+    - name: Enabling web and worker services
+      command: sudo systemctl enable concourse-web concourse-worker
+
+    - name: Checking status of web and worker service
+      command: sudo systemctl status concourse-web concourse-worker
+
+      
