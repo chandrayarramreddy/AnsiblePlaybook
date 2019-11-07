@@ -22,7 +22,22 @@
     dbuser: concourse
     dbpassword: concourse
 
+
+
   tasks:
+
+
+
+  - name: Connect to acme database, create django user, and grant access to database and products table
+    postgresql_user:
+     db: atc
+     name: postgres
+     password: postgres
+
+  - name: Create a new database with name "acme"
+    postgresql_db:
+     name: atc
+
   - name: ensure database is created
     postgresql_db: name={{dbname}}
 
