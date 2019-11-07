@@ -22,6 +22,15 @@
       - libpq-dev
       - python-psycopg2
     tags: packages
+
+  - name: install prerequisites
+    sudo: true
+    apt: name={{ item }} state=latest
+    with_items:
+      - libpq-dev
+      - python-psycopg2
+    tags:
+      - packages
   
   - name: Ensure the PostgreSQL service is running
     service: name=postgresql state=started enabled=yes
