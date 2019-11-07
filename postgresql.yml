@@ -24,7 +24,7 @@
     tags: packages
 
   - name: install prerequisites
-    sudo: true
+    #sudo: true
     apt: name={{ item }} state=latest
     with_items:
       - libpq-dev
